@@ -9,7 +9,7 @@ To reset last local commit
 To remove remote branch - (In most cases, [remote_name] will be origin)
 
 ```sh
-  git push -d [remote_name] [branchname]
+  git push -d [remote_name] [branch_name]
 ```
 
 To remove local branch - (first, checkout another branch)
