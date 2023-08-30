@@ -1,5 +1,23 @@
 <h1>GIT CHEET SHEET</h1>
 
+To reset last local commit
+
+```sh
+  git reset --hard HEAD~1
+```
+
+To remove remote branch - (In most cases, [remote_name] will be origin)
+
+```sh
+  git push -d [remote_name] [branchname]
+```
+
+To remove local branch - (first, checkout another branch)
+
+```sh
+  git branch -D [branch_name]
+```
+
 Show modified files in working directory, staged for your next commit
 
 ```sh
