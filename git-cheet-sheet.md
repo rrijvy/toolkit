@@ -119,3 +119,16 @@ Discard the changes from top of stash stack
 ```sh
   git stash drop
 ```
+
+Check git remote url
+
+```sh
+  git remote -v
+```
+
+Change git remote url
+
+```sh
+  git remote set-url origin [url]
+
+```
