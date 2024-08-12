@@ -1,5 +1,11 @@
 <h1>GIT CHEET SHEET</h1>
 
+To revert last commit
+
+```sh
+  git revert -m 1 [commit_sha]
+```
+
 To reset last local commit
 
 ```sh
