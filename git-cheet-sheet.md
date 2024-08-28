@@ -1,5 +1,11 @@
 <h1>GIT CHEET SHEET</h1>
 
+Discard all local changes
+
+```sh
+  git restore .
+```
+
 To revert last commit
 
 ```sh
