@@ -18,6 +18,10 @@ To reset last local commit
   git reset --hard HEAD~1
 ```
 
+```sh
+  git reset --soft HEAD~1
+```
+
 To remove remote branch - (In most cases, [remote_name] will be origin)
 
 ```sh
