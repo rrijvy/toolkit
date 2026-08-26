@@ -1,9 +1,25 @@
 <h1>GIT CHEET SHEET</h1>
 
+Discard all local changes
+
+```sh
+  git restore .
+```
+
+To revert last commit
+
+```sh
+  git revert -m 1 [commit_sha]
+```
+
 To reset last local commit
 
 ```sh
   git reset --hard HEAD~1
+```
+
+```sh
+  git reset --soft HEAD~1
 ```
 
 To remove remote branch - (In most cases, [remote_name] will be origin)
