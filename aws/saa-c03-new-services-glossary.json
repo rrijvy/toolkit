@@ -1,0 +1,1166 @@
+[
+  {
+    "section": "Data & Analytics",
+    "entries": [
+      {
+        "name": "Kinesis",
+        "description": "AWS's family of real-time data streaming tools:",
+        "children": [
+          {
+            "name": "Data Streams / Analytics",
+            "description": "Collects and processes data as it arrives, in real time (like a live pipe of data)."
+          },
+          {
+            "name": "Data Firehose",
+            "description": "Automatically loads streaming data into S3, Redshift, etc. Simpler than Data Streams."
+          },
+          {
+            "name": "Client Library (KCL)",
+            "description": "A library used to build your own app that reads and processes records from a Kinesis data stream."
+          },
+          {
+            "name": "Producer Library (KPL)",
+            "description": "A client library apps use to efficiently batch and send records into a Kinesis data stream."
+          }
+        ]
+      },
+      {
+        "name": "Amazon MSK (Managed Streaming for Apache Kafka)",
+        "description": "A managed way to run Apache Kafka for ingesting and processing real-time streaming data.",
+        "children": []
+      },
+      {
+        "name": "Athena",
+        "description": "Run SQL queries directly on files sitting in S3. No database needed.",
+        "children": [
+          {
+            "name": "Federated Query",
+            "description": "Lets Athena also run SQL against other data sources (like a live DynamoDB table) through a connector, without first copying that data into S3."
+          }
+        ]
+      },
+      {
+        "name": "QuickSight",
+        "description": "Build dashboards and charts (BI tool) from your data.",
+        "children": [
+          {
+            "name": "SPICE",
+            "description": "QuickSight's built-in in-memory engine; load data into it so dashboards query fast without hitting the original data source every time."
+          }
+        ]
+      },
+      {
+        "name": "Redshift",
+        "description": "A data warehouse. Built for big, heavy analytics queries.",
+        "children": [
+          {
+            "name": "Data API",
+            "description": "Lets apps run SQL queries against Redshift over a simple API call instead of managing a persistent database connection."
+          },
+          {
+            "name": "Spectrum",
+            "description": "Lets Redshift run SQL queries directly against data sitting in S3, without loading it into the cluster first."
+          }
+        ]
+      },
+      {
+        "name": "Glue",
+        "description": "Finds, cleans, and moves data between sources (ETL = Extract, Transform, Load). Has \"crawlers\" that scan data and \"job bookmarks\" that remember what's already processed.",
+        "children": [
+          {
+            "name": "Glue Studio",
+            "description": "A visual, drag-and-drop interface for building and monitoring Glue ETL jobs (no need to hand-write scripts)."
+          },
+          {
+            "name": "ML Transforms",
+            "description": "A Glue feature that uses machine learning during ETL, e.g. matching/deduplicating similar records — not a general ML model-building platform."
+          },
+          {
+            "name": "Elastic Views",
+            "description": "(Discontinued) Used to build a materialized view combining data from a database into S3 and kept it auto-synced."
+          }
+        ]
+      },
+      {
+        "name": "Lake Formation",
+        "description": "Helps you build a \"data lake\" (a big organized S3 storage area) quickly and securely.",
+        "children": [
+          {
+            "name": "Blueprints",
+            "description": "A pre-built Lake Formation template that automates ingesting data (e.g., from a database) into an S3 data lake."
+          },
+          {
+            "name": "Tag-Based Access Control (LF-TBAC)",
+            "description": "Grants data lake access by tagging databases/tables/columns instead of managing permissions resource-by-resource — scales much better for cross-account sharing."
+          }
+        ]
+      },
+      {
+        "name": "OpenSearch Service",
+        "description": "Search and log analytics engine (used for searching large text/log data, not for BI dashboards).",
+        "children": []
+      },
+      {
+        "name": "Amazon EMR",
+        "description": "A managed big-data cluster service (runs tools like Hadoop/Spark/Hive) for processing huge datasets — heavier and more manual than Glue.",
+        "children": []
+      },
+      {
+        "name": "CloudWatch Logs Insights",
+        "description": "Lets you interactively search and analyze log data in CloudWatch Logs using a query language.",
+        "children": []
+      },
+      {
+        "name": "Amazon DynamoDB",
+        "description": "A fully managed, serverless NoSQL key-value/document database with single-digit-millisecond performance at any scale. Beyond the basics, DynamoDB has several add-on capabilities:",
+        "children": [
+          {
+            "name": "Accelerator (DAX)",
+            "description": "An in-memory cache that sits in front of DynamoDB to speed up read performance (does not help with writes)."
+          },
+          {
+            "name": "Streams",
+            "description": "A time-ordered log of item-level changes in a table; can trigger a Lambda function whenever data changes."
+          },
+          {
+            "name": "Global Tables",
+            "description": "Automatically replicates a DynamoDB table across multiple AWS regions for multi-region reads/writes and resilience."
+          },
+          {
+            "name": "Time to Live (TTL)",
+            "description": "Automatically deletes items from a table after a timestamp you set expires — free, no extra code needed."
+          },
+          {
+            "name": "Transactions",
+            "description": "Groups multiple item writes into one all-or-nothing atomic operation."
+          },
+          {
+            "name": "Point-in-Time Recovery (PITR)",
+            "description": "Continuous, native backup of a table (can export to S3) that lets you restore to any point in time, without using up the table's read/write capacity."
+          },
+          {
+            "name": "Standard-IA Table Class",
+            "description": "A cheaper-to-store table class for infrequently accessed data (trades lower storage cost for higher per-request cost) — the DynamoDB equivalent of S3 Standard-IA."
+          },
+          {
+            "name": "Read/Write Capacity Units (RCU/WCU)",
+            "description": "In provisioned-capacity mode, you set a fixed number of Read Capacity Units and Write Capacity Units per second the table can handle; exceeding them throttles requests unless you switch to on-demand mode instead."
+          }
+        ]
+      },
+      {
+        "name": "Amazon RDS",
+        "description": "A managed relational database service (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server) that handles patching, backups, and failover for you. Beyond the basics, RDS has several add-on capabilities:",
+        "children": [
+          {
+            "name": "Proxy",
+            "description": "Sits between your app and an RDS/Aurora database, pooling connections so many short-lived Lambda calls don't exhaust the database's connection limit."
+          },
+          {
+            "name": "Custom",
+            "description": "A managed RDS option that still lets you log in and customize the underlying OS/database, unlike standard RDS."
+          },
+          {
+            "name": "Performance Insights",
+            "description": "A built-in dashboard that visualizes database load so you can spot performance problems."
+          },
+          {
+            "name": "Query Editor",
+            "description": "A browser-based SQL editor in the RDS console for querying Aurora Serverless (via the Data API) without installing a separate database client — only works on RDS/Aurora, not on files in S3."
+          }
+        ]
+      },
+      {
+        "name": "Aurora",
+        "description": "AWS's own MySQL- and PostgreSQL-compatible relational database engine, built for the cloud to be faster and more fault-tolerant than standard RDS engines at similar cost. Beyond the standard managed relational database:",
+        "children": [
+          {
+            "name": "Global Database",
+            "description": "Replicates an Aurora database across AWS regions with very low lag — good for cross-region disaster recovery."
+          },
+          {
+            "name": "Serverless",
+            "description": "An on-demand version of Aurora that automatically scales database capacity up and down based on load."
+          },
+          {
+            "name": "Auto Scaling",
+            "description": "Automatically adds/removes Aurora read replicas as read traffic changes."
+          }
+        ]
+      },
+      {
+        "name": "Amazon DocumentDB (with MongoDB compatibility)",
+        "description": "A managed document database that \"speaks\" MongoDB's API, so a MongoDB-based app can run on AWS with no code changes.",
+        "children": []
+      },
+      {
+        "name": "Amazon ElastiCache",
+        "description": "A managed in-memory data store/cache (Redis or Memcached) that sits in front of a database to serve very low-latency reads and reduce load on the primary data store.",
+        "children": []
+      },
+      {
+        "name": "Amazon SageMaker Pipelines",
+        "description": "Builds and automates end-to-end machine learning workflows (e.g., can auto-run when new data files arrive).",
+        "children": []
+      },
+      {
+        "name": "Amazon AppFlow",
+        "description": "A managed integration service with built-in SaaS connectors (e.g., Salesforce) that securely moves data into AWS services like S3, encrypting data in transit and supporting a customer-managed KMS key at rest.",
+        "children": []
+      },
+      {
+        "name": "AWS Data Exchange",
+        "description": "Find, subscribe to, or privately publish third-party data sets/data products to other AWS accounts.",
+        "children": []
+      }
+    ]
+  },
+  {
+    "section": "Security & Identity",
+    "entries": [
+      {
+        "name": "Secrets Manager",
+        "description": "Safely stores passwords/API keys and can auto-rotate them.",
+        "children": []
+      },
+      {
+        "name": "Systems Manager Parameter Store",
+        "description": "Also stores config values/secrets, but simpler (no auto-rotation).",
+        "children": []
+      },
+      {
+        "name": "Cognito",
+        "description": "Handles user sign-up/login (User Pool) and gives logged-in users temporary AWS access (Identity Pool).",
+        "children": []
+      },
+      {
+        "name": "Firewall Manager",
+        "description": "Lets you set one security rule and apply it across many AWS accounts at once.",
+        "children": []
+      },
+      {
+        "name": "Shield / Shield Advanced",
+        "description": "Protects your app from DDoS (flood) attacks.",
+        "children": []
+      },
+      {
+        "name": "Network Firewall",
+        "description": "A firewall inside your VPC that inspects and filters network traffic.",
+        "children": []
+      },
+      {
+        "name": "GuardDuty",
+        "description": "Watches your account for suspicious/malicious activity (like a security camera).",
+        "children": []
+      },
+      {
+        "name": "Inspector",
+        "description": "Scans EC2/containers/Lambda for known software vulnerabilities.",
+        "children": []
+      },
+      {
+        "name": "Macie",
+        "description": "Scans S3 for sensitive data (like credit card numbers) using AI.",
+        "children": []
+      },
+      {
+        "name": "Amazon Detective",
+        "description": "Analyzes and visualizes log data (VPC Flow Logs, CloudTrail, GuardDuty findings) to help investigate the root cause of a security finding after it's raised.",
+        "children": []
+      },
+      {
+        "name": "AWS Audit Manager",
+        "description": "Continuously collects evidence and maps it to a chosen compliance framework (e.g., PCI DSS) to simplify audit prep.",
+        "children": []
+      },
+      {
+        "name": "AWS Organizations / SCP (Service Control Policy)",
+        "description": "Manage many AWS accounts together; SCPs are rules that block actions across all of them.",
+        "children": []
+      },
+      {
+        "name": "Control Tower",
+        "description": "Sets up and governs a multi-account AWS environment with built-in guardrails.",
+        "children": []
+      },
+      {
+        "name": "ACM (Certificate Manager)",
+        "description": "Creates and manages SSL/TLS certificates (for HTTPS).",
+        "children": []
+      },
+      {
+        "name": "AWS Config",
+        "description": "Tracks and reports if your AWS resources follow the rules you set (detects problems, doesn't block them).",
+        "children": []
+      },
+      {
+        "name": "AWS Systems Manager Session Manager",
+        "description": "Lets you open a secure shell on an EC2 instance from the console/CLI — no open SSH ports, no key pairs, no bastion host, just an attached IAM role.",
+        "children": []
+      },
+      {
+        "name": "STS (Security Token Service) / AssumeRole",
+        "description": "Issues short-lived, temporary credentials so a role in one AWS account can securely access resources in another account, instead of using long-term keys.",
+        "children": []
+      },
+      {
+        "name": "IAM Roles for Service Accounts (IRSA)",
+        "description": "An EKS feature that lets each Kubernetes pod assume its own narrow IAM role, instead of every pod sharing the node's permissions.",
+        "children": []
+      },
+      {
+        "name": "IAM Identity Center (AWS SSO)",
+        "description": "Lets users sign in once to access many AWS accounts/apps, using permission sets tied to directory groups.",
+        "children": []
+      },
+      {
+        "name": "AWS WAF (Web Application Firewall)",
+        "description": "Filters and blocks malicious HTTP(S) requests (SQL injection, XSS, rate-based abuse) before they reach CloudFront, an ALB, or API Gateway, using rules you define.",
+        "children": []
+      },
+      {
+        "name": "AWS IAM (Identity and Access Management)",
+        "description": "Controls who (users, groups, roles) can do what (permissions via policies) across your AWS account; the foundation of AWS access control. Beyond basic users/groups/roles/policies:",
+        "children": [
+          {
+            "name": "Account Password Policy",
+            "description": "One account-wide setting that enforces password complexity and rotation rules for every IAM user, including future ones."
+          },
+          {
+            "name": "aws:PrincipalOrgID / aws:PrincipalOrgPaths",
+            "description": "Policy condition keys you add to a resource policy (e.g., an S3 bucket policy) so it auto-grants access to every current and future account in your AWS Organization, without listing each account."
+          }
+        ]
+      },
+      {
+        "name": "AWS Directory Service",
+        "description": "AWS's family of managed directory options for Windows/Active Directory-based authentication, including Simple AD, AWS Managed Microsoft AD, and AD Connector.",
+        "children": [
+          {
+            "name": "AWS Managed Microsoft AD",
+            "description": "A real Microsoft Active Directory that AWS runs for you; can trust an existing on-premises AD."
+          },
+          {
+            "name": "AD Connector",
+            "description": "A lightweight proxy that redirects sign-in requests to your existing on-premises Active Directory, without copying user data into AWS."
+          }
+        ]
+      },
+      {
+        "name": "AWS KMS (Key Management Service)",
+        "description": "Creates and controls the encryption keys used to encrypt data across AWS services; keys are used for encrypt/decrypt operations but the key material never leaves KMS unencrypted.",
+        "children": [
+          {
+            "name": "Multi-Region Keys",
+            "description": "A KMS key whose key material is replicated into multiple regions, so data encrypted in one region can be decrypted with the matching key in another."
+          }
+        ]
+      },
+      {
+        "name": "AWS Client VPN",
+        "description": "A managed VPN service that gives individual remote employees a secure encrypted connection into AWS/on-prem networks from their own laptop.",
+        "children": []
+      },
+      {
+        "name": "AWS Account Alternate Contacts",
+        "description": "Lets you add extra contacts (besides the root user) so important account notifications reliably reach someone.",
+        "children": []
+      },
+      {
+        "name": "Amazon S3 Pre-Signed URLs",
+        "description": "A time-limited link that grants temporary access to one private S3 object (upload or download) without changing bucket permissions.",
+        "children": []
+      },
+      {
+        "name": "Amazon CloudFront",
+        "description": "AWS's content delivery network (CDN): caches and serves content from edge locations close to users to speed up delivery of both static and dynamic content worldwide.",
+        "children": []
+      },
+      {
+        "name": "CloudFront (access control)",
+        "description": "Ways to restrict who can reach private CloudFront content:",
+        "children": [
+          {
+            "name": "Origin Access Identity (OAI)",
+            "description": "A special identity attached to a CloudFront distribution and granted exclusive S3 access, so content can only be fetched through CloudFront, never directly from S3."
+          },
+          {
+            "name": "Signed URLs / Signed Cookies",
+            "description": "Signed URLs embed the auth info in the link itself (for clients without cookie support); signed cookies keep the original URL unchanged and grant access via a cookie."
+          },
+          {
+            "name": "Field-Level Encryption",
+            "description": "Encrypts specific sensitive form fields right at the CloudFront edge with a public key, so only backend systems with the matching private key can decrypt them — protects the data even after HTTPS ends."
+          }
+        ]
+      },
+      {
+        "name": "API Gateway (access control)",
+        "description": "Ways to gate who can call an API:",
+        "children": [
+          {
+            "name": "Usage Plans & API Keys",
+            "description": "Issue API keys to known clients and set throttling/quota limits per key — a simple way to gate access (e.g., only paying subscribers)."
+          },
+          {
+            "name": "Resource Policy",
+            "description": "A policy attached to an API that allows/denies requests based on conditions like the caller's source IP address."
+          }
+        ]
+      },
+      {
+        "name": "SQS-Managed Server-Side Encryption (SSE-SQS)",
+        "description": "A built-in SQS encryption option using keys SQS manages itself — no KMS setup or decrypt permissions needed (simpler, less control than SSE-KMS).",
+        "children": []
+      },
+      {
+        "name": "RDS IAM Database Authentication",
+        "description": "Lets apps connect to an RDS database using temporary IAM-generated tokens instead of a traditional username/password.",
+        "children": []
+      },
+      {
+        "name": "AWS CloudTrail",
+        "description": "Logs every API call/action taken in your AWS account (who did what, when, from where) for auditing, troubleshooting, and compliance.",
+        "children": [
+          {
+            "name": "Data Events",
+            "description": "An optional, more detailed logging level that records object-level activity (e.g., individual S3 object reads/writes) — off by default, unlike basic management-event logging."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Networking",
+    "entries": [
+      {
+        "name": "Amazon VPC (Virtual Private Cloud)",
+        "description": "Your own logically isolated, private network within AWS where you launch resources and control subnets, routing, and IP addressing.",
+        "children": [
+          {
+            "name": "Security Group",
+            "description": "A stateful, instance-level virtual firewall — allow rules only; return traffic is automatically permitted."
+          },
+          {
+            "name": "Network ACL",
+            "description": "A stateless, subnet-level firewall with explicit allow AND deny rules, evaluated in order — a second layer of defense behind security groups."
+          },
+          {
+            "name": "Elastic IP",
+            "description": "A static public IPv4 address you allocate to your account and can attach to (or move between) EC2 instances/network interfaces."
+          },
+          {
+            "name": "Internet Gateway",
+            "description": "Attached to a VPC to let resources in public subnets send and receive traffic directly to and from the internet."
+          }
+        ]
+      },
+      {
+        "name": "Elastic Load Balancing (ELB)",
+        "description": "Automatically distributes incoming traffic across multiple targets (EC2 instances, containers, IPs). An Application Load Balancer (ALB) operates at Layer 7 (HTTP/HTTPS, path/host-based routing); a Network Load Balancer (NLB) operates at Layer 4 for extreme performance and static IPs; the legacy Classic Load Balancer (CLB) is largely superseded by the two.",
+        "children": []
+      },
+      {
+        "name": "Global Accelerator",
+        "description": "Routes users to the nearest AWS entry point using AWS's private network. Good for gaming, APIs, non-web traffic.",
+        "children": []
+      },
+      {
+        "name": "VPC Endpoint / PrivateLink",
+        "description": "Lets your private network talk to AWS services (or another company's service) without going over the public internet.",
+        "children": []
+      },
+      {
+        "name": "VPC Peering",
+        "description": "A direct private connection between two VPCs (even across accounts/regions) so they can talk using private IPs, as if on the same network.",
+        "children": []
+      },
+      {
+        "name": "NAT Gateway",
+        "description": "Lets private-subnet resources reach the internet (outbound only), fully managed by AWS.",
+        "children": []
+      },
+      {
+        "name": "NAT Instance",
+        "description": "The older, self-managed (you patch/scale it yourself) EC2-based alternative to a NAT Gateway.",
+        "children": []
+      },
+      {
+        "name": "Egress-Only Internet Gateway",
+        "description": "Gives IPv6 resources in a subnet outbound-only internet access, blocking anything initiated from the internet.",
+        "children": []
+      },
+      {
+        "name": "Virtual Private Gateway (VGW)",
+        "description": "The AWS-side endpoint that terminates a VPN or Direct Connect connection and routes traffic between a VPC and your on-premises network.",
+        "children": []
+      },
+      {
+        "name": "Direct Connect",
+        "description": "A dedicated private network line from your office/data center straight to AWS.",
+        "children": [
+          {
+            "name": "Direct Connect Gateway",
+            "description": "Lets one Direct Connect connection reach multiple VPCs, including ones in different AWS Regions."
+          },
+          {
+            "name": "Virtual Interface (VIF)",
+            "description": "The logical connection carried over a Direct Connect link: a private VIF reaches resources inside a VPC, while a public VIF reaches public AWS service endpoints (like S3) over the dedicated line instead of the internet."
+          }
+        ]
+      },
+      {
+        "name": "Site-to-Site VPN",
+        "description": "An encrypted tunnel connecting your network to AWS over the internet.",
+        "children": []
+      },
+      {
+        "name": "EventBridge",
+        "description": "Routes \"events\" (things that happened) between AWS services automatically.",
+        "children": []
+      },
+      {
+        "name": "Amazon Route 53",
+        "description": "AWS's highly available managed DNS service; also supports domain registration and health-check-based failover.",
+        "children": [
+          {
+            "name": "Advanced Routing Policies",
+            "description": "Beyond basic DNS, Route 53 can route by geographic location (geolocation), lowest latency, traffic percentage (weighted), or return several healthy answers at once for clients to pick randomly (multivalue answer)."
+          }
+        ]
+      },
+      {
+        "name": "Amazon API Gateway",
+        "description": "A fully managed service to create, publish, secure, and monitor REST, HTTP, and WebSocket APIs at any scale, typically fronting Lambda or other backends.",
+        "children": []
+      },
+      {
+        "name": "API Gateway (private connectivity)",
+        "description": "Ways to keep an API off the public internet:",
+        "children": [
+          {
+            "name": "VPC Link",
+            "description": "Lets a public REST API in API Gateway securely reach backend resources (like containers) sitting in private VPC subnets, without exposing them to the internet."
+          },
+          {
+            "name": "Private Integration",
+            "description": "The general term for connecting an API privately into a VPC instead of over the public internet."
+          }
+        ]
+      },
+      {
+        "name": "AWS Transit Gateway",
+        "description": "A central regional network hub that lets hundreds of VPCs (and on-premises networks, via Direct Connect/VPN) all connect through one managed gateway instead of a full mesh of individual peering connections; Transit Gateway peering links hubs together across regions.",
+        "children": []
+      },
+      {
+        "name": "Transit VPC",
+        "description": "An older, self-managed hub-and-spoke pattern that routes traffic between VPCs/on-premises through a central VPC running your own router software — mostly superseded by Transit Gateway.",
+        "children": []
+      },
+      {
+        "name": "AWS App Mesh",
+        "description": "A service mesh giving microservices (e.g., on ECS) application-level networking — communicate, monitor, and control traffic between services.",
+        "children": []
+      },
+      {
+        "name": "CloudFront (traffic & response config)",
+        "description": "Non-caching configuration options for a distribution:",
+        "children": [
+          {
+            "name": "Origin Request Policy",
+            "description": "Controls which headers/cookies/query strings CloudFront forwards to the origin on a cache miss — configuration only, cannot resize images or run processing logic."
+          },
+          {
+            "name": "Response Headers Policy",
+            "description": "Adds or modifies HTTP headers on responses sent back to viewers — also configuration only, no content transformation."
+          },
+          {
+            "name": "Geographic Restrictions (Geo-Blocking)",
+            "description": "Uses a country allow-list or block-list to permit/deny viewers by geographic location."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Migration",
+    "entries": [
+      {
+        "name": "Application Migration Service (MGN)",
+        "description": "Copies (\"lift and shift\") your on-premises servers into AWS as EC2 instances.",
+        "children": []
+      },
+      {
+        "name": "Database Migration Service (DMS)",
+        "description": "Moves databases into AWS, and can keep syncing while the old one is still running.",
+        "children": []
+      },
+      {
+        "name": "Schema Conversion Tool (SCT)",
+        "description": "Converts a database's structure from one engine to another (e.g., Oracle → PostgreSQL).",
+        "children": []
+      },
+      {
+        "name": "App2Container (A2C)",
+        "description": "Automatically packages an existing app into a Docker container.",
+        "children": []
+      },
+      {
+        "name": "AWS DataSync",
+        "description": "Uses an on-premises agent to automatically move large amounts of data (e.g., an on-prem NFS share) into AWS storage like S3 or EFS, without manual copying.",
+        "children": []
+      },
+      {
+        "name": "AWS Snowcone",
+        "description": "A small, lightweight, portable version of Snowball Edge for locations with limited space/bandwidth.",
+        "children": []
+      },
+      {
+        "name": "AWS Transfer Family",
+        "description": "A fully managed SFTP/FTPS/FTP server backed by S3, so external partners can upload files straight into your S3 data lake with no server to manage.",
+        "children": []
+      },
+      {
+        "name": "AWS Snowmobile",
+        "description": "An actual shipping-container truck AWS sends you to physically move exabyte-scale data — for transfers far too big even for a Snowball Edge.",
+        "children": []
+      },
+      {
+        "name": "AWS Elastic Disaster Recovery (AWS DRS)",
+        "description": "Continuously replicates disk-level changes from an on-premises (or other) server to AWS so it can be quickly recovered after an outage — whole-server block replication, not database-aware.",
+        "children": []
+      }
+    ]
+  },
+  {
+    "section": "Compute & Containers",
+    "entries": [
+      {
+        "name": "ECS (Elastic Container Service)",
+        "description": "Runs and manages Docker containers.",
+        "children": []
+      },
+      {
+        "name": "Amazon ECR (Elastic Container Registry)",
+        "description": "A managed Docker container image registry: push, store, scan, and pull the images your ECS/EKS/Fargate tasks run.",
+        "children": []
+      },
+      {
+        "name": "EKS (Elastic Kubernetes Service)",
+        "description": "AWS's managed Kubernetes service — runs a standard Kubernetes cluster without you managing the control plane.",
+        "children": [
+          {
+            "name": "Managed Node Groups",
+            "description": "Lets EKS automatically provision, scale, and update the underlying EC2 (including Spot) worker nodes for you."
+          }
+        ]
+      },
+      {
+        "name": "Fargate",
+        "description": "Runs containers without you managing any servers (serverless containers); works with both ECS and EKS.",
+        "children": []
+      },
+      {
+        "name": "AWS Load Balancer Controller",
+        "description": "Automatically provisions and configures AWS load balancers to route traffic to containers running on EKS/EC2.",
+        "children": []
+      },
+      {
+        "name": "AWS App Runner",
+        "description": "Fully managed hosting for containerized web apps/APIs — quick to deploy, but only for HTTP-facing apps, not batch jobs.",
+        "children": []
+      },
+      {
+        "name": "AWS ParallelCluster",
+        "description": "An open-source tool for deploying and managing High Performance Computing (HPC) clusters on AWS.",
+        "children": []
+      },
+      {
+        "name": "Amazon Lightsail",
+        "description": "A simplified, cheaper \"starter\" VPS that bundles compute+storage+networking, for simple apps that don't need full EC2.",
+        "children": []
+      },
+      {
+        "name": "Amazon MQ",
+        "description": "A managed message broker (like RabbitMQ/ActiveMQ) — an alternative to SQS/SNS when you need those specific protocols.",
+        "children": []
+      },
+      {
+        "name": "AWS Batch",
+        "description": "Runs large batch jobs and automatically manages the compute needed.",
+        "children": []
+      },
+      {
+        "name": "AWS Application Auto Scaling",
+        "description": "Automatically adjusts capacity for resources like ECS services (not just EC2) using target-tracking policies.",
+        "children": []
+      },
+      {
+        "name": "Amazon EC2 Auto Scaling",
+        "description": "Automatically launches or terminates EC2 instances in an Auto Scaling group to match demand and keep a healthy instance count, based on scaling policies (target tracking, step, or scheduled).",
+        "children": []
+      },
+      {
+        "name": "AWS Elastic Beanstalk",
+        "description": "A platform-as-a-service (PaaS): upload your application code and Beanstalk automatically handles provisioning, load balancing, scaling, and deployment on your behalf.",
+        "children": []
+      },
+      {
+        "name": "AWS Step Functions",
+        "description": "Coordinates multiple Lambda functions and other AWS services into a visual, reliable multi-step workflow (state machine), handling retries and error branching for you.",
+        "children": []
+      },
+      {
+        "name": "Amazon EC2",
+        "description": "Resizable virtual servers (\"instances\") in the cloud, billed by the instance type/size and purchasing option you choose. Beyond the standard instance:",
+        "children": [
+          {
+            "name": "Amazon Machine Image (AMI)",
+            "description": "The template (OS + software + config) used to launch an EC2 instance; you can use an AWS-provided AMI, one from the Marketplace, or build your own."
+          },
+          {
+            "name": "Placement Groups (Cluster / Partition)",
+            "description": "Controls how EC2 instances are physically placed on hardware; a cluster placement group packs them close together in one AZ for the lowest latency/highest throughput."
+          },
+          {
+            "name": "Serial Console",
+            "description": "A direct, out-of-band terminal into an EC2 instance — a troubleshooting tool, not for routine remote admin."
+          },
+          {
+            "name": "Instance Store",
+            "description": "Temporary block storage physically attached to the host — very fast, but wiped when the instance stops/terminates."
+          }
+        ]
+      },
+      {
+        "name": "AWS Lambda",
+        "description": "Runs your code in response to triggers without you provisioning or managing any servers; you're billed only for the compute time you actually use. Beyond a basic function:",
+        "children": [
+          {
+            "name": "Lambda@Edge",
+            "description": "Runs Lambda functions at CloudFront's edge locations, to process/filter requests close to users."
+          },
+          {
+            "name": "Provisioned Concurrency",
+            "description": "Keeps a set number of Lambda environments \"pre-warmed\" so there's no cold-start delay."
+          },
+          {
+            "name": "Reserved Concurrency",
+            "description": "Caps/guarantees a fixed amount of concurrent Lambda executions, but does not pre-warm anything (cold starts can still happen)."
+          }
+        ]
+      },
+      {
+        "name": "Spot / Reserved / Scheduled Reserved Instances / Savings Plans",
+        "description": "Ways to pay less for EC2: Spot = cheap but can be interrupted; Reserved = commit 1-3 years for a discount; Scheduled Reserved = reserved capacity only for a recurring time window; Savings Plans = commit to a $/hour spend across EC2/Fargate/Lambda for a discount.",
+        "children": []
+      }
+    ]
+  },
+  {
+    "section": "Storage",
+    "entries": [
+      {
+        "name": "Amazon EBS (Elastic Block Store)",
+        "description": "Persistent, redundant block storage volumes that attach to a single EC2 instance, like a virtual hard drive; volume types (gp3, io2, etc.) trade off cost, throughput, and provisioned IOPS.",
+        "children": [
+          {
+            "name": "Multi-Attach",
+            "description": "Lets a single Provisioned IOPS (io1/io2) EBS volume be attached to multiple EC2 instances at once in the same AZ, for clustered applications that manage concurrent writes themselves."
+          }
+        ]
+      },
+      {
+        "name": "Amazon EFS (Elastic File System)",
+        "description": "A managed, elastic NFS file system that many EC2 instances (or Lambda functions) can mount and share concurrently across Availability Zones.",
+        "children": []
+      },
+      {
+        "name": "FSx",
+        "description": "AWS's family of managed, high-performance shared file systems:",
+        "children": [
+          {
+            "name": "for Lustre",
+            "description": "Built for supercomputing/HPC workloads."
+          },
+          {
+            "name": "for Windows File Server",
+            "description": "Native Windows SMB shares, single- or multi-AZ."
+          },
+          {
+            "name": "for NetApp ONTAP",
+            "description": "Runs NetApp's ONTAP file system, with configurable data-tiering for high-throughput, low-latency multi-instance access."
+          },
+          {
+            "name": "for OpenZFS",
+            "description": "Built on the OpenZFS file system; unlike the other FSx types, only supports single-AZ deployments."
+          },
+          {
+            "name": "File Gateway",
+            "description": "A Storage Gateway type giving on-premises servers cached, low-latency local access to a fully managed FSx for Windows File Server share running in AWS."
+          }
+        ]
+      },
+      {
+        "name": "Storage Gateway",
+        "description": "AWS's family of hybrid on-premises-to-cloud storage appliances:",
+        "children": [
+          {
+            "name": "File Gateway",
+            "description": "A virtual device that connects your on-premises servers to S3 as a file share, with local caching for speed."
+          },
+          {
+            "name": "Volume Gateway",
+            "description": "Presents cloud-backed block storage volumes to on-prem apps over iSCSI (cached volumes = hot data local + full data in S3; stored volumes = full data on-prem, backed up to S3)."
+          },
+          {
+            "name": "Tape Gateway",
+            "description": "Presents a virtual tape library so on-prem backup software can archive to S3/Glacier as if writing to physical tapes."
+          }
+        ]
+      },
+      {
+        "name": "Amazon S3",
+        "description": "Durable, virtually unlimited object storage accessed over HTTP(S) — the default place to park files, backups, static assets, and data-lake data. Beyond the basics, S3 has many add-on capabilities:",
+        "children": [
+          {
+            "name": "Transfer Acceleration",
+            "description": "Speeds up uploads to S3 from far-away locations."
+          },
+          {
+            "name": "Multipart Upload",
+            "description": "Splits a large file into smaller parts uploaded independently (then reassembled) — used for large object transfers over HTTPS."
+          },
+          {
+            "name": "Lifecycle Policy",
+            "description": "A rule that automatically moves old files to cheaper storage over time."
+          },
+          {
+            "name": "Glacier / Glacier Deep Archive",
+            "description": "Very cheap, slow-to-retrieve storage for long-term archives."
+          },
+          {
+            "name": "Glacier Select",
+            "description": "Lets you run SQL-like queries directly against data inside a Glacier archive, without retrieving/decompressing the whole archive first."
+          },
+          {
+            "name": "Intelligent-Tiering",
+            "description": "Automatically moves files between storage tiers based on how often they're used (has a small per-object monitoring fee)."
+          },
+          {
+            "name": "One Zone-IA",
+            "description": "Cheaper storage that lives in only one data center (less durable, less available)."
+          },
+          {
+            "name": "Object Lock",
+            "description": "Makes objects immutable (write-once-read-many) with either a fixed retention period or a legal hold, so they can't be changed or deleted until released."
+          },
+          {
+            "name": "Bucket Keys",
+            "description": "A short-lived, bucket-level key derived from a KMS key that S3 reuses for many objects, cutting KMS API calls (and cost) while still using SSE-KMS."
+          },
+          {
+            "name": "Cross-Region Replication (CRR) / Replication",
+            "description": "Automatically and asynchronously copies new objects from one bucket to another (same or different region)."
+          },
+          {
+            "name": "Inventory",
+            "description": "A scheduled report listing all objects in a bucket plus metadata (like encryption status) — handy for auditing millions of files without listing them by hand."
+          },
+          {
+            "name": "Batch Operations",
+            "description": "Runs one managed job (e.g., copy, re-encrypt) across millions of existing objects at once."
+          },
+          {
+            "name": "Event Notifications",
+            "description": "Automatically triggers an action (e.g., invoking Lambda) whenever an object is created, modified, or deleted."
+          },
+          {
+            "name": "Server Access Logging",
+            "description": "Records detailed logs of every request made to a bucket — good for auditing, not for live change-detection."
+          },
+          {
+            "name": "Static Website Hosting",
+            "description": "Serves static content (HTML/CSS/JS) directly from a bucket as a website."
+          },
+          {
+            "name": "MFA Delete",
+            "description": "Requires a second authentication factor to permanently delete an object version — protects versioned files from accidental/malicious deletion."
+          },
+          {
+            "name": "Object Lambda",
+            "description": "Attaches a Lambda function to S3 GET requests so data (e.g., PII) can be transformed/redacted on the fly per requesting app, without keeping separate duplicate copies."
+          },
+          {
+            "name": "Block Public Access",
+            "description": "A bucket- or account-level setting that force-keeps objects private, overriding any bucket policy or ACL that would otherwise expose them."
+          },
+          {
+            "name": "Storage Lens",
+            "description": "An organization-wide analytics dashboard showing detailed S3 usage/activity metrics (request counts, retrieval rates) — good for spotting unused or rarely-accessed buckets."
+          },
+          {
+            "name": "Reduced Redundancy Storage (RRS)",
+            "description": "A legacy, lower-durability, lower-cost storage class — deprecated, not recommended for new workloads."
+          },
+          {
+            "name": "Server-Side Encryption (SSE-S3 / SSE-C / SSE-KMS)",
+            "description": "Encrypts objects at rest: SSE-S3 uses keys S3 manages itself (simplest, no setup); SSE-KMS uses a KMS key you control, giving audit logging and rotation; SSE-C lets you supply your own encryption key with every request, and S3 never stores it."
+          }
+        ]
+      },
+      {
+        "name": "AWS Backup",
+        "description": "A centralized backup service: define a schedule and retention period (e.g., daily, kept 2 years) and apply it across resources like RDS/Aurora/EBS.",
+        "children": [
+          {
+            "name": "Vault Lock",
+            "description": "Locks a backup vault into a true immutable, write-once-read-many state; in compliance mode, not even the root user can alter or delete backups before the retention period ends."
+          }
+        ]
+      },
+      {
+        "name": "Amazon Data Lifecycle Manager (DLM)",
+        "description": "Automates creating, retaining, and deleting EBS snapshots on a schedule.",
+        "children": []
+      },
+      {
+        "name": "Snowball Edge",
+        "description": "A physical device AWS ships you to move huge amounts of data when internet transfer is too slow.",
+        "children": []
+      },
+      {
+        "name": "Amazon RDS Storage Auto Scaling",
+        "description": "Automatically grows a database's allocated storage online, with no downtime, once free space drops below a threshold.",
+        "children": []
+      }
+    ]
+  },
+  {
+    "section": "AI & Machine Learning",
+    "entries": [
+      {
+        "name": "Amazon Transcribe",
+        "description": "Automatically converts speech in audio recordings (in many languages) into written text.",
+        "children": []
+      },
+      {
+        "name": "Amazon Translate",
+        "description": "Automatically translates text from one language into another.",
+        "children": []
+      },
+      {
+        "name": "Amazon Comprehend",
+        "description": "Natural-language processing service that reads text and detects things like sentiment (positive/negative).",
+        "children": []
+      },
+      {
+        "name": "Amazon Polly",
+        "description": "Converts written text into lifelike speech (the opposite of Transcribe).",
+        "children": []
+      },
+      {
+        "name": "Amazon Lex",
+        "description": "Builds voice/text conversational chatbots (not for sentiment analysis or reports).",
+        "children": []
+      },
+      {
+        "name": "Amazon Rekognition",
+        "description": "Analyzes images and video (not text) — e.g., detecting objects or faces.",
+        "children": []
+      },
+      {
+        "name": "Amazon Textract",
+        "description": "Extracts text and data from scanned documents (OCR) — different from transcribing audio (Transcribe) or translating languages (Translate).",
+        "children": []
+      }
+    ]
+  },
+  {
+    "section": "Monitoring & Cost Management",
+    "entries": [
+      {
+        "name": "AWS Trusted Advisor",
+        "description": "Automatically inspects your account and gives recommendations across cost optimization, security, fault tolerance, performance, and service limits.",
+        "children": []
+      },
+      {
+        "name": "Amazon CloudWatch",
+        "description": "Collects metrics, logs, and events from your AWS resources and lets you build dashboards and alarms to monitor and react to them. Beyond basic alarms/metrics/dashboards:",
+        "children": [
+          {
+            "name": "Synthetics",
+            "description": "Scripted \"canaries\" that periodically test your app's endpoints to proactively catch availability/performance problems."
+          },
+          {
+            "name": "Composite Alarms",
+            "description": "Combines multiple existing alarms with AND/OR logic so a notification only fires when several conditions happen together (fewer false alerts)."
+          },
+          {
+            "name": "Metric Streams",
+            "description": "Continuously streams CloudWatch metrics in near real time to a destination like Kinesis Data Firehose, without polling."
+          },
+          {
+            "name": "Logs (export / subscription filter)",
+            "description": "Export logs to S3 for long-term storage, or stream them live to another service (like OpenSearch) via a subscription filter."
+          },
+          {
+            "name": "Agent",
+            "description": "Optional software you install on EC2 instances to collect extra metrics (like memory utilization) or custom app metrics that CloudWatch doesn't gather by default."
+          },
+          {
+            "name": "Container Insights",
+            "description": "Collects and summarizes performance metrics/logs specifically from containerized apps — a monitoring tool, not an event trigger."
+          }
+        ]
+      },
+      {
+        "name": "AWS Systems Manager",
+        "description": "A management hub for operating your EC2 and hybrid on-premises infrastructure at scale (patching, running commands, storing config) — includes Session Manager and Parameter Store. Beyond Session Manager and Parameter Store:",
+        "children": [
+          {
+            "name": "Automation",
+            "description": "Runs pre-built or custom \"documents\" that script multi-step operational tasks (e.g., patching an instance and re-registering it with a load balancer)."
+          },
+          {
+            "name": "Maintenance Windows",
+            "description": "Defines a recurring scheduled time window during which tasks like patching are allowed to run."
+          },
+          {
+            "name": "State Manager",
+            "description": "Continuously applies and enforces a configuration you define across your managed instances."
+          },
+          {
+            "name": "Run Command",
+            "description": "Remotely runs a command/script on managed EC2 instances without logging into them individually."
+          },
+          {
+            "name": "Inventory",
+            "description": "Automatically collects metadata (OS version, patch status, installed software) from managed EC2 instances."
+          }
+        ]
+      },
+      {
+        "name": "AWS Budgets",
+        "description": "Set a spending/usage threshold and get automatically alerted when you're forecast to cross it.",
+        "children": [
+          {
+            "name": "Budgets Actions",
+            "description": "Can automatically apply a restrictive IAM policy or SCP once a spending threshold is hit, instead of just sending an alert."
+          }
+        ]
+      },
+      {
+        "name": "AWS Cost Explorer",
+        "description": "Visualize, filter, and report on your AWS spending (e.g., by user or tag) — no threshold-alerting built in.",
+        "children": []
+      },
+      {
+        "name": "AWS Cost and Usage Report (CUR)",
+        "description": "A detailed, granular export of billing data you can query with tools like Athena.",
+        "children": []
+      },
+      {
+        "name": "AWS Cost Allocation Tags",
+        "description": "User-defined or AWS-defined tags (e.g., \"department\") that must be activated from the management account's billing console before Cost Explorer can group/report spending by that tag org-wide.",
+        "children": []
+      },
+      {
+        "name": "AWS Resource Groups Tag Editor",
+        "description": "A console tool to quickly find and report on resources across services/regions based on their tags.",
+        "children": []
+      },
+      {
+        "name": "AWS X-Ray",
+        "description": "Traces and visualizes how individual requests flow through and perform across a distributed application's components — not an infrastructure inventory tool.",
+        "children": []
+      },
+      {
+        "name": "Workload Discovery on AWS",
+        "description": "Automatically builds visual architecture diagrams of your AWS resources and how they relate, by pulling from AWS Config and CloudTrail across accounts/regions.",
+        "children": []
+      },
+      {
+        "name": "AWS Reserved Instance Marketplace",
+        "description": "Lets you sell your unused, unexpired EC2 Reserved Instances to other AWS customers (Savings Plans have no equivalent resale option).",
+        "children": []
+      }
+    ]
+  },
+  {
+    "section": "Other",
+    "entries": [
+      {
+        "name": "AWS CloudFormation",
+        "description": "Infrastructure as code: define your AWS resources in a template (JSON/YAML) and CloudFormation creates, updates, or deletes them together as one managed stack.",
+        "children": []
+      },
+      {
+        "name": "AWS Amplify",
+        "description": "A managed platform for building, hosting, and deploying full-stack web/mobile apps with built-in CI/CD.",
+        "children": []
+      },
+      {
+        "name": "AWS AppSync",
+        "description": "A managed service for building and running GraphQL APIs.",
+        "children": []
+      },
+      {
+        "name": "Amazon Simple Email Service (SES)",
+        "description": "A managed service for sending (and receiving) email programmatically, e.g., for automated notifications.",
+        "children": []
+      },
+      {
+        "name": "Amazon WorkMail",
+        "description": "A managed business email and calendar service.",
+        "children": []
+      },
+      {
+        "name": "Amazon Pinpoint",
+        "description": "A managed service for sending targeted, personalized messages to users across email, SMS, push notifications, and voice.",
+        "children": []
+      },
+      {
+        "name": "Amazon Connect",
+        "description": "A cloud-based contact center service for setting up customer service call/chat centers without on-premises hardware.",
+        "children": []
+      },
+      {
+        "name": "Amazon SNS (Simple Notification Service)",
+        "description": "A managed pub/sub messaging service: publish a message once to a topic and fan it out to many subscribers (SQS queues, Lambda, email, SMS, HTTP endpoints) at once.",
+        "children": [
+          {
+            "name": "Message Filtering",
+            "description": "Lets each subscriber (e.g., an SQS queue) receive only a subset of messages published to a topic, based on filter rules — used to fan out and route messages by type."
+          }
+        ]
+      },
+      {
+        "name": "Amazon SQS (Simple Queue Service)",
+        "description": "A managed message queue that decouples producers and consumers; supports Standard queues (high throughput, at-least-once, best-effort ordering) and FIFO queues (strict ordering, exactly-once processing).",
+        "children": [
+          {
+            "name": "Extended Client Library",
+            "description": "A Java library that auto-stores SQS message payloads bigger than 256 KB in S3 and sends only a small pointer through the queue — minimal code change to handle much larger messages."
+          }
+        ]
+      },
+      {
+        "name": "AWS Resource Access Manager (RAM)",
+        "description": "Securely shares AWS resources across multiple AWS accounts — not a tool for detecting or fixing publicly exposed S3 buckets.",
+        "children": []
+      },
+      {
+        "name": "AWS Service Catalog",
+        "description": "Lets admins publish a catalog of pre-approved, standardized resource configurations so staff can only deploy already-sanctioned setups.",
+        "children": []
+      },
+      {
+        "name": "AWS Marketplace",
+        "description": "A digital catalog to find, buy, and deploy pre-configured third-party software and AMIs on AWS.",
+        "children": []
+      }
+    ]
+  }
+]

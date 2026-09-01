@@ -1,6 +1,6 @@
-# New AWS Services From Parts 1–21 Q&A — Simple Glossary
+# AWS Services From Parts 1–21 Q&A — Simple Glossary
 
-These are services/features that showed up across the 500 questions (Parts 1–21) but were NOT in your original core-27 list. Grouped by topic, one plain-English line each. Where several entries are really the same service family (e.g., all the different Kinesis or S3 pieces), they're nested under one parent bullet instead of repeated separately.
+Every AWS service/feature that showed up across the 500 questions (Parts 1–21), including the original core-27 list. Grouped by topic, one plain-English line each. Where several entries are really the same service family (e.g., all the different Kinesis or S3 pieces), they're nested under one parent bullet instead of repeated separately.
 
 ---
 
@@ -28,7 +28,7 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **OpenSearch Service** — Search and log analytics engine (used for searching large text/log data, not for BI dashboards).
 - **Amazon EMR** — A managed big-data cluster service (runs tools like Hadoop/Spark/Hive) for processing huge datasets — heavier and more manual than Glue.
 - **CloudWatch Logs Insights** — Lets you interactively search and analyze log data in CloudWatch Logs using a query language.
-- **DynamoDB (extra features)** — Beyond the basics, DynamoDB has several add-on capabilities:
+- **Amazon DynamoDB** — A fully managed, serverless NoSQL key-value/document database with single-digit-millisecond performance at any scale. Beyond the basics, DynamoDB has several add-on capabilities:
   - **Accelerator (DAX)** — An in-memory cache that sits in front of DynamoDB to speed up *read* performance (does not help with writes).
   - **Streams** — A time-ordered log of item-level changes in a table; can trigger a Lambda function whenever data changes.
   - **Global Tables** — Automatically replicates a DynamoDB table across multiple AWS regions for multi-region reads/writes and resilience.
@@ -36,16 +36,18 @@ These are services/features that showed up across the 500 questions (Parts 1–2
   - **Transactions** — Groups multiple item writes into one all-or-nothing atomic operation.
   - **Point-in-Time Recovery (PITR)** — Continuous, native backup of a table (can export to S3) that lets you restore to any point in time, without using up the table's read/write capacity.
   - **Standard-IA Table Class** — A cheaper-to-store table class for infrequently accessed data (trades lower storage cost for higher per-request cost) — the DynamoDB equivalent of S3 Standard-IA.
-- **Amazon RDS (extra features)** — Beyond the basics, RDS has several add-on capabilities:
+  - **Read/Write Capacity Units (RCU/WCU)** — In provisioned-capacity mode, you set a fixed number of Read Capacity Units and Write Capacity Units per second the table can handle; exceeding them throttles requests unless you switch to on-demand mode instead.
+- **Amazon RDS** — A managed relational database service (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server) that handles patching, backups, and failover for you. Beyond the basics, RDS has several add-on capabilities:
   - **Proxy** — Sits between your app and an RDS/Aurora database, pooling connections so many short-lived Lambda calls don't exhaust the database's connection limit.
   - **Custom** — A managed RDS option that still lets you log in and customize the underlying OS/database, unlike standard RDS.
   - **Performance Insights** — A built-in dashboard that visualizes database load so you can spot performance problems.
   - **Query Editor** — A browser-based SQL editor in the RDS console for querying Aurora Serverless (via the Data API) without installing a separate database client — only works on RDS/Aurora, not on files in S3.
-- **Aurora** — beyond the standard managed relational database:
+- **Aurora** — AWS's own MySQL- and PostgreSQL-compatible relational database engine, built for the cloud to be faster and more fault-tolerant than standard RDS engines at similar cost. Beyond the standard managed relational database:
   - **Global Database** — Replicates an Aurora database across AWS regions with very low lag — good for cross-region disaster recovery.
   - **Serverless** — An on-demand version of Aurora that automatically scales database capacity up and down based on load.
   - **Auto Scaling** — Automatically adds/removes Aurora read replicas as read traffic changes.
 - **Amazon DocumentDB (with MongoDB compatibility)** — A managed document database that "speaks" MongoDB's API, so a MongoDB-based app can run on AWS with no code changes.
+- **Amazon ElastiCache** — A managed in-memory data store/cache (Redis or Memcached) that sits in front of a database to serve very low-latency reads and reduce load on the primary data store.
 - **Amazon SageMaker Pipelines** — Builds and automates end-to-end machine learning workflows (e.g., can auto-run when new data files arrive).
 - **Amazon AppFlow** — A managed integration service with built-in SaaS connectors (e.g., Salesforce) that securely moves data into AWS services like S3, encrypting data in transit and supporting a customer-managed KMS key at rest.
 - **AWS Data Exchange** — Find, subscribe to, or privately publish third-party data sets/data products to other AWS accounts.
@@ -60,6 +62,8 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **GuardDuty** — Watches your account for suspicious/malicious activity (like a security camera).
 - **Inspector** — Scans EC2/containers/Lambda for known software vulnerabilities.
 - **Macie** — Scans S3 for sensitive data (like credit card numbers) using AI.
+- **Amazon Detective** — Analyzes and visualizes log data (VPC Flow Logs, CloudTrail, GuardDuty findings) to help investigate the root cause of a security finding after it's raised.
+- **AWS Audit Manager** — Continuously collects evidence and maps it to a chosen compliance framework (e.g., PCI DSS) to simplify audit prep.
 - **AWS Organizations / SCP (Service Control Policy)** — Manage many AWS accounts together; SCPs are rules that block actions across all of them.
 - **Control Tower** — Sets up and governs a multi-account AWS environment with built-in guardrails.
 - **ACM (Certificate Manager)** — Creates and manages SSL/TLS certificates (for HTTPS).
@@ -68,15 +72,19 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **STS (Security Token Service) / AssumeRole** — Issues short-lived, temporary credentials so a role in one AWS account can securely access resources in another account, instead of using long-term keys.
 - **IAM Roles for Service Accounts (IRSA)** — An EKS feature that lets each Kubernetes pod assume its own narrow IAM role, instead of every pod sharing the node's permissions.
 - **IAM Identity Center (AWS SSO)** — Lets users sign in once to access many AWS accounts/apps, using permission sets tied to directory groups.
-- **IAM (extra policy features)** — Beyond basic users/groups/roles/policies:
+- **AWS WAF (Web Application Firewall)** — Filters and blocks malicious HTTP(S) requests (SQL injection, XSS, rate-based abuse) before they reach CloudFront, an ALB, or API Gateway, using rules you define.
+- **AWS IAM (Identity and Access Management)** — Controls who (users, groups, roles) can do what (permissions via policies) across your AWS account; the foundation of AWS access control. Beyond basic users/groups/roles/policies:
   - **Account Password Policy** — One account-wide setting that enforces password complexity and rotation rules for every IAM user, including future ones.
   - **`aws:PrincipalOrgID` / `aws:PrincipalOrgPaths`** — Policy condition keys you add to a resource policy (e.g., an S3 bucket policy) so it auto-grants access to every current and future account in your AWS Organization, without listing each account.
-- **AWS Managed Microsoft AD** — A real Microsoft Active Directory that AWS runs for you; can trust an existing on-premises AD.
-- **AD Connector** — A lightweight proxy that redirects sign-in requests to your existing on-premises Active Directory, without copying user data into AWS.
-- **AWS KMS Multi-Region Keys** — A KMS key whose key material is replicated into multiple regions, so data encrypted in one region can be decrypted with the matching key in another.
+- **AWS Directory Service** — AWS's family of managed directory options for Windows/Active Directory-based authentication, including Simple AD, AWS Managed Microsoft AD, and AD Connector.
+  - **AWS Managed Microsoft AD** — A real Microsoft Active Directory that AWS runs for you; can trust an existing on-premises AD.
+  - **AD Connector** — A lightweight proxy that redirects sign-in requests to your existing on-premises Active Directory, without copying user data into AWS.
+- **AWS KMS (Key Management Service)** — Creates and controls the encryption keys used to encrypt data across AWS services; keys are used for encrypt/decrypt operations but the key material never leaves KMS unencrypted.
+  - **Multi-Region Keys** — A KMS key whose key material is replicated into multiple regions, so data encrypted in one region can be decrypted with the matching key in another.
 - **AWS Client VPN** — A managed VPN service that gives individual remote employees a secure encrypted connection into AWS/on-prem networks from their own laptop.
 - **AWS Account Alternate Contacts** — Lets you add extra contacts (besides the root user) so important account notifications reliably reach someone.
 - **Amazon S3 Pre-Signed URLs** — A time-limited link that grants temporary access to one private S3 object (upload or download) without changing bucket permissions.
+- **Amazon CloudFront** — AWS's content delivery network (CDN): caches and serves content from edge locations close to users to speed up delivery of both static and dynamic content worldwide.
 - **CloudFront (access control)** — Ways to restrict who can reach private CloudFront content:
   - **Origin Access Identity (OAI)** — A special identity attached to a CloudFront distribution and granted exclusive S3 access, so content can only be fetched through CloudFront, never directly from S3.
   - **Signed URLs / Signed Cookies** — Signed URLs embed the auth info in the link itself (for clients without cookie support); signed cookies keep the original URL unchanged and grant access via a cookie.
@@ -86,9 +94,16 @@ These are services/features that showed up across the 500 questions (Parts 1–2
   - **Resource Policy** — A policy attached to an API that allows/denies requests based on conditions like the caller's source IP address.
 - **SQS-Managed Server-Side Encryption (SSE-SQS)** — A built-in SQS encryption option using keys SQS manages itself — no KMS setup or decrypt permissions needed (simpler, less control than SSE-KMS).
 - **RDS IAM Database Authentication** — Lets apps connect to an RDS database using temporary IAM-generated tokens instead of a traditional username/password.
-- **CloudTrail Data Events** — An optional, more detailed CloudTrail logging level that records object-level activity (e.g., individual S3 object reads/writes) — off by default, unlike basic management-event logging.
+- **AWS CloudTrail** — Logs every API call/action taken in your AWS account (who did what, when, from where) for auditing, troubleshooting, and compliance.
+  - **Data Events** — An optional, more detailed logging level that records object-level activity (e.g., individual S3 object reads/writes) — off by default, unlike basic management-event logging.
 
 ## Networking
+- **Amazon VPC (Virtual Private Cloud)** — Your own logically isolated, private network within AWS where you launch resources and control subnets, routing, and IP addressing.
+  - **Security Group** — A stateful, instance-level virtual firewall — allow rules only; return traffic is automatically permitted.
+  - **Network ACL** — A stateless, subnet-level firewall with explicit allow AND deny rules, evaluated in order — a second layer of defense behind security groups.
+  - **Elastic IP** — A static public IPv4 address you allocate to your account and can attach to (or move between) EC2 instances/network interfaces.
+  - **Internet Gateway** — Attached to a VPC to let resources in public subnets send and receive traffic directly to and from the internet.
+- **Elastic Load Balancing (ELB)** — Automatically distributes incoming traffic across multiple targets (EC2 instances, containers, IPs). An **Application Load Balancer (ALB)** operates at Layer 7 (HTTP/HTTPS, path/host-based routing); a **Network Load Balancer (NLB)** operates at Layer 4 for extreme performance and static IPs; the legacy **Classic Load Balancer (CLB)** is largely superseded by the two.
 - **Global Accelerator** — Routes users to the nearest AWS entry point using AWS's private network. Good for gaming, APIs, non-web traffic.
 - **VPC Endpoint / PrivateLink** — Lets your private network talk to AWS services (or another company's service) without going over the public internet.
 - **VPC Peering** — A direct private connection between two VPCs (even across accounts/regions) so they can talk using private IPs, as if on the same network.
@@ -98,9 +113,12 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **Virtual Private Gateway (VGW)** — The AWS-side endpoint that terminates a VPN or Direct Connect connection and routes traffic between a VPC and your on-premises network.
 - **Direct Connect** — A dedicated private network line from your office/data center straight to AWS.
   - **Direct Connect Gateway** — Lets one Direct Connect connection reach multiple VPCs, including ones in different AWS Regions.
+  - **Virtual Interface (VIF)** — The logical connection carried over a Direct Connect link: a *private* VIF reaches resources inside a VPC, while a *public* VIF reaches public AWS service endpoints (like S3) over the dedicated line instead of the internet.
 - **Site-to-Site VPN** — An encrypted tunnel connecting your network to AWS over the internet.
 - **EventBridge** — Routes "events" (things that happened) between AWS services automatically.
-- **Route 53 Advanced Routing Policies** — Beyond basic DNS, Route 53 can route by geographic location (geolocation), lowest latency, traffic percentage (weighted), or return several healthy answers at once for clients to pick randomly (multivalue answer).
+- **Amazon Route 53** — AWS's highly available managed DNS service; also supports domain registration and health-check-based failover.
+  - **Advanced Routing Policies** — Beyond basic DNS, Route 53 can route by geographic location (geolocation), lowest latency, traffic percentage (weighted), or return several healthy answers at once for clients to pick randomly (multivalue answer).
+- **Amazon API Gateway** — A fully managed service to create, publish, secure, and monitor REST, HTTP, and WebSocket APIs at any scale, typically fronting Lambda or other backends.
 - **API Gateway (private connectivity)** — Ways to keep an API off the public internet:
   - **VPC Link** — Lets a public REST API in API Gateway securely reach backend resources (like containers) sitting in private VPC subnets, without exposing them to the internet.
   - **Private Integration** — The general term for connecting an API privately into a VPC instead of over the public internet.
@@ -125,6 +143,7 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 
 ## Compute & Containers
 - **ECS (Elastic Container Service)** — Runs and manages Docker containers.
+- **Amazon ECR (Elastic Container Registry)** — A managed Docker container image registry: push, store, scan, and pull the images your ECS/EKS/Fargate tasks run.
 - **EKS (Elastic Kubernetes Service)** — AWS's managed Kubernetes service — runs a standard Kubernetes cluster without you managing the control plane.
   - **Managed Node Groups** — Lets EKS automatically provision, scale, and update the underlying EC2 (including Spot) worker nodes for you.
 - **Fargate** — Runs containers without you managing any servers (serverless containers); works with both ECS and EKS.
@@ -135,17 +154,24 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **Amazon MQ** — A managed message broker (like RabbitMQ/ActiveMQ) — an alternative to SQS/SNS when you need those specific protocols.
 - **AWS Batch** — Runs large batch jobs and automatically manages the compute needed.
 - **AWS Application Auto Scaling** — Automatically adjusts capacity for resources like ECS services (not just EC2) using target-tracking policies.
-- **EC2 (extra features)** — Beyond the standard instance:
+- **Amazon EC2 Auto Scaling** — Automatically launches or terminates EC2 instances in an Auto Scaling group to match demand and keep a healthy instance count, based on scaling policies (target tracking, step, or scheduled).
+- **AWS Elastic Beanstalk** — A platform-as-a-service (PaaS): upload your application code and Beanstalk automatically handles provisioning, load balancing, scaling, and deployment on your behalf.
+- **AWS Step Functions** — Coordinates multiple Lambda functions and other AWS services into a visual, reliable multi-step workflow (state machine), handling retries and error branching for you.
+- **Amazon EC2** — Resizable virtual servers ("instances") in the cloud, billed by the instance type/size and purchasing option you choose. Beyond the standard instance:
+  - **Amazon Machine Image (AMI)** — The template (OS + software + config) used to launch an EC2 instance; you can use an AWS-provided AMI, one from the Marketplace, or build your own.
   - **Placement Groups (Cluster / Partition)** — Controls how EC2 instances are physically placed on hardware; a *cluster* placement group packs them close together in one AZ for the lowest latency/highest throughput.
   - **Serial Console** — A direct, out-of-band terminal into an EC2 instance — a troubleshooting tool, not for routine remote admin.
   - **Instance Store** — Temporary block storage physically attached to the host — very fast, but wiped when the instance stops/terminates.
-- **Lambda (extra features)** — Beyond a basic function:
+- **AWS Lambda** — Runs your code in response to triggers without you provisioning or managing any servers; you're billed only for the compute time you actually use. Beyond a basic function:
   - **Lambda@Edge** — Runs Lambda functions at CloudFront's edge locations, to process/filter requests close to users.
   - **Provisioned Concurrency** — Keeps a set number of Lambda environments "pre-warmed" so there's no cold-start delay.
   - **Reserved Concurrency** — Caps/guarantees a fixed amount of concurrent Lambda executions, but does *not* pre-warm anything (cold starts can still happen).
 - **Spot / Reserved / Scheduled Reserved Instances / Savings Plans** — Ways to pay less for EC2: Spot = cheap but can be interrupted; Reserved = commit 1-3 years for a discount; Scheduled Reserved = reserved capacity only for a recurring time window; Savings Plans = commit to a $/hour spend across EC2/Fargate/Lambda for a discount.
 
 ## Storage
+- **Amazon EBS (Elastic Block Store)** — Persistent, redundant block storage volumes that attach to a single EC2 instance, like a virtual hard drive; volume types (gp3, io2, etc.) trade off cost, throughput, and provisioned IOPS.
+  - **Multi-Attach** — Lets a single Provisioned IOPS (io1/io2) EBS volume be attached to multiple EC2 instances at once in the same AZ, for clustered applications that manage concurrent writes themselves.
+- **Amazon EFS (Elastic File System)** — A managed, elastic NFS file system that many EC2 instances (or Lambda functions) can mount and share concurrently across Availability Zones.
 - **FSx** — AWS's family of managed, high-performance shared file systems:
   - **for Lustre** — Built for supercomputing/HPC workloads.
   - **for Windows File Server** — Native Windows SMB shares, single- or multi-AZ.
@@ -156,7 +182,7 @@ These are services/features that showed up across the 500 questions (Parts 1–2
   - **File Gateway** — A virtual device that connects your on-premises servers to S3 as a file share, with local caching for speed.
   - **Volume Gateway** — Presents cloud-backed block storage volumes to on-prem apps over iSCSI (cached volumes = hot data local + full data in S3; stored volumes = full data on-prem, backed up to S3).
   - **Tape Gateway** — Presents a virtual tape library so on-prem backup software can archive to S3/Glacier as if writing to physical tapes.
-- **Amazon S3 (extra features)** — Beyond basic object storage, S3 has many add-on capabilities:
+- **Amazon S3** — Durable, virtually unlimited object storage accessed over HTTP(S) — the default place to park files, backups, static assets, and data-lake data. Beyond the basics, S3 has many add-on capabilities:
   - **Transfer Acceleration** — Speeds up uploads to S3 from far-away locations.
   - **Multipart Upload** — Splits a large file into smaller parts uploaded independently (then reassembled) — used for large object transfers over HTTPS.
   - **Lifecycle Policy** — A rule that automatically moves old files to cheaper storage over time.
@@ -177,6 +203,7 @@ These are services/features that showed up across the 500 questions (Parts 1–2
   - **Block Public Access** — A bucket- or account-level setting that force-keeps objects private, overriding any bucket policy or ACL that would otherwise expose them.
   - **Storage Lens** — An organization-wide analytics dashboard showing detailed S3 usage/activity metrics (request counts, retrieval rates) — good for spotting unused or rarely-accessed buckets.
   - **Reduced Redundancy Storage (RRS)** — A legacy, lower-durability, lower-cost storage class — deprecated, not recommended for new workloads.
+  - **Server-Side Encryption (SSE-S3 / SSE-C / SSE-KMS)** — Encrypts objects at rest: SSE-S3 uses keys S3 manages itself (simplest, no setup); SSE-KMS uses a KMS key you control, giving audit logging and rotation; SSE-C lets you supply your own encryption key with every request, and S3 never stores it.
 - **AWS Backup** — A centralized backup service: define a schedule and retention period (e.g., daily, kept 2 years) and apply it across resources like RDS/Aurora/EBS.
   - **Vault Lock** — Locks a backup vault into a true immutable, write-once-read-many state; in compliance mode, not even the root user can alter or delete backups before the retention period ends.
 - **Amazon Data Lifecycle Manager (DLM)** — Automates creating, retaining, and deleting EBS snapshots on a schedule.
@@ -193,14 +220,15 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **Amazon Textract** — Extracts text and data from scanned documents (OCR) — different from transcribing audio (Transcribe) or translating languages (Translate).
 
 ## Monitoring & Cost Management
-- **CloudWatch (extra features)** — Beyond basic alarms/metrics/dashboards:
+- **AWS Trusted Advisor** — Automatically inspects your account and gives recommendations across cost optimization, security, fault tolerance, performance, and service limits.
+- **Amazon CloudWatch** — Collects metrics, logs, and events from your AWS resources and lets you build dashboards and alarms to monitor and react to them. Beyond basic alarms/metrics/dashboards:
   - **Synthetics** — Scripted "canaries" that periodically test your app's endpoints to proactively catch availability/performance problems.
   - **Composite Alarms** — Combines multiple existing alarms with AND/OR logic so a notification only fires when several conditions happen together (fewer false alerts).
   - **Metric Streams** — Continuously streams CloudWatch metrics in near real time to a destination like Kinesis Data Firehose, without polling.
   - **Logs (export / subscription filter)** — Export logs to S3 for long-term storage, or stream them live to another service (like OpenSearch) via a subscription filter.
   - **Agent** — Optional software you install on EC2 instances to collect extra metrics (like memory utilization) or custom app metrics that CloudWatch doesn't gather by default.
   - **Container Insights** — Collects and summarizes performance metrics/logs specifically from containerized apps — a monitoring tool, not an event trigger.
-- **Systems Manager (extra features)** — Beyond Session Manager and Parameter Store:
+- **AWS Systems Manager** — A management hub for operating your EC2 and hybrid on-premises infrastructure at scale (patching, running commands, storing config) — includes Session Manager and Parameter Store. Beyond Session Manager and Parameter Store:
   - **Automation** — Runs pre-built or custom "documents" that script multi-step operational tasks (e.g., patching an instance and re-registering it with a load balancer).
   - **Maintenance Windows** — Defines a recurring scheduled time window during which tasks like patching are allowed to run.
   - **State Manager** — Continuously applies and enforces a configuration you define across your managed instances.
@@ -217,12 +245,17 @@ These are services/features that showed up across the 500 questions (Parts 1–2
 - **AWS Reserved Instance Marketplace** — Lets you sell your unused, unexpired EC2 Reserved Instances to other AWS customers (Savings Plans have no equivalent resale option).
 
 ## Other
+- **AWS CloudFormation** — Infrastructure as code: define your AWS resources in a template (JSON/YAML) and CloudFormation creates, updates, or deletes them together as one managed stack.
 - **AWS Amplify** — A managed platform for building, hosting, and deploying full-stack web/mobile apps with built-in CI/CD.
 - **AWS AppSync** — A managed service for building and running GraphQL APIs.
 - **Amazon Simple Email Service (SES)** — A managed service for sending (and receiving) email programmatically, e.g., for automated notifications.
 - **Amazon WorkMail** — A managed business email and calendar service.
-- **SNS Message Filtering** — Lets each subscriber (e.g., an SQS queue) receive only a subset of messages published to a topic, based on filter rules — used to fan out and route messages by type.
-- **Amazon SQS Extended Client Library** — A Java library that auto-stores SQS message payloads bigger than 256 KB in S3 and sends only a small pointer through the queue — minimal code change to handle much larger messages.
+- **Amazon Pinpoint** — A managed service for sending targeted, personalized messages to users across email, SMS, push notifications, and voice.
+- **Amazon Connect** — A cloud-based contact center service for setting up customer service call/chat centers without on-premises hardware.
+- **Amazon SNS (Simple Notification Service)** — A managed pub/sub messaging service: publish a message once to a topic and fan it out to many subscribers (SQS queues, Lambda, email, SMS, HTTP endpoints) at once.
+  - **Message Filtering** — Lets each subscriber (e.g., an SQS queue) receive only a subset of messages published to a topic, based on filter rules — used to fan out and route messages by type.
+- **Amazon SQS (Simple Queue Service)** — A managed message queue that decouples producers and consumers; supports Standard queues (high throughput, at-least-once, best-effort ordering) and FIFO queues (strict ordering, exactly-once processing).
+  - **Extended Client Library** — A Java library that auto-stores SQS message payloads bigger than 256 KB in S3 and sends only a small pointer through the queue — minimal code change to handle much larger messages.
 - **AWS Resource Access Manager (RAM)** — Securely shares AWS resources across multiple AWS accounts — not a tool for detecting or fixing publicly exposed S3 buckets.
 - **AWS Service Catalog** — Lets admins publish a catalog of pre-approved, standardized resource configurations so staff can only deploy already-sanctioned setups.
 - **AWS Marketplace** — A digital catalog to find, buy, and deploy pre-configured third-party software and AMIs on AWS.

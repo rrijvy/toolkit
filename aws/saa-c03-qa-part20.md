@@ -112,7 +112,7 @@ Source: [AWS Certified Solutions Architect (SAA-C03) | Real Exam Questions & Ans
 - A. Update the bucket policy to deny if the PutObject request does not have an x-amz-acl header set
 - B. Update the bucket policy to deny if the PutObject request does not have an x-amz-acl header set to private
 - C. Update the bucket policy to deny if the PutObject request does not have an x-amz-server-side-encryption header set to true (via aws:SecureTransport)
-- D. Update the bucket policy to deny if the PutObject request does not have an x-amz-server-side-encryption header set
+- ✅ D. Update the bucket policy to deny if the PutObject request does not have an x-amz-server-side-encryption header set
 
 **Reason:** The x-amz-server-side-encryption header is the specific field clients must include on a PutObject request to enable server-side encryption, so a bucket policy that denies uploads lacking this header forces all objects to be encrypted. The x-amz-acl header (A, B) controls access permissions, not encryption, and aws:SecureTransport (C) only enforces HTTPS in transit, not encryption at rest.
 
