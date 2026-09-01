@@ -22,6 +22,12 @@
   body.lang-bn { font-family: 'Noto Sans Bengali', ui-sans-serif, system-ui, sans-serif; }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-thumb { background: rgba(148,163,184,.5); border-radius: 9999px; }
+
+  /* Remove the default mobile tap-flash so our own pressed/hover states read cleanly, and let
+     buttons/links respond to taps immediately (no 300ms delay, no double-tap-to-zoom). */
+  * { -webkit-tap-highlight-color: transparent; }
+  button, .svc-hl, input[type="checkbox"] { touch-action: manipulation; }
+
   .svc-hl {
     text-decoration: underline;
     text-decoration-style: dotted;
@@ -29,6 +35,9 @@
     text-underline-offset: 3px;
     cursor: help;
     border-radius: 3px;
+    /* small negative-margin padding trick: bigger tap target without disturbing text flow */
+    padding: 2px 1px;
+    margin: -2px -1px;
   }
   .svc-hl:hover, .svc-hl:focus-visible, .svc-hl.is-pinned {
     background-color: rgb(14 165 233 / .15);
@@ -40,34 +49,45 @@
   }
   #tooltip { transition: opacity .1s ease; }
   #arrow { position: absolute; width: 8px; height: 8px; background: inherit; transform: rotate(45deg); }
+
+  /* iOS Safari auto-zooms the page when focusing an input with computed font-size < 16px --
+     force 16px on small screens regardless of the text-sm utility class applied to the input. */
+  @media (max-width: 640px) {
+    #jumpInput { font-size: 16px; }
+  }
 </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen">
 
 <header class="sticky top-0 z-30 backdrop-blur bg-white/80 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800">
-  <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+  <div class="max-w-3xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-3">
     <div class="flex items-center gap-2 min-w-0">
       <span class="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-orange-500 text-white font-bold text-sm shrink-0">AWS</span>
       <div class="min-w-0">
-        <h1 id="headerTitle" class="font-semibold leading-tight truncate">SAA-C03 Practice Quiz</h1>
-        <p id="headerSubtitle" class="text-xs text-slate-500 dark:text-slate-400 leading-tight">500 real exam questions</p>
+        <h1 id="headerTitle" class="font-semibold leading-tight truncate text-sm sm:text-base">SAA-C03 Practice Quiz</h1>
+        <p id="headerSubtitle" class="hidden sm:block text-xs text-slate-500 dark:text-slate-400 leading-tight truncate">500 real exam questions</p>
       </div>
     </div>
-    <div class="flex items-center gap-2 shrink-0">
-      <div id="scoreBadge" class="hidden sm:flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+    <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+      <div id="scoreBadge" class="hidden md:flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
         <span id="scoreText">0 / 0 correct</span>
       </div>
-      <button id="langToggle" title="Switch language" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m6.334-12.138a24.75 24.75 0 0 1 4.474 3.586m-2.72 5.86-3.674-3.573" /></svg>
+      <button id="langToggle" title="Switch language" class="flex items-center gap-1 px-2 py-1.5 sm:px-2.5 rounded-lg text-xs font-semibold border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 text-slate-600 dark:text-slate-300">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m6.334-12.138a24.75 24.75 0 0 1 4.474 3.586m-2.72 5.86-3.674-3.573" /></svg>
         <span id="langToggleLabel">বাং</span>
       </button>
-      <button id="resetProgressBtn" title="Clear saved progress" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400">
+      <button id="resetProgressBtn" title="Clear saved progress" class="p-1.5 sm:p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 text-slate-500 dark:text-slate-400">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
       </button>
-      <button id="darkToggle" title="Toggle dark mode" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400">
+      <button id="darkToggle" title="Toggle dark mode" class="p-1.5 sm:p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 text-slate-500 dark:text-slate-400">
         <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 hidden"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg>
         <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
       </button>
+    </div>
+  </div>
+  <div id="mobileScoreRow" class="md:hidden px-3 pb-2 -mt-1">
+    <div id="scoreBadgeMobile" class="hidden text-xs font-medium text-slate-500 dark:text-slate-400">
+      <span id="scoreTextMobile">0 / 0 correct</span>
     </div>
   </div>
 </header>
@@ -109,10 +129,10 @@
 
     <div id="optionsList" class="space-y-2.5"></div>
 
-    <div class="flex items-center gap-2 mt-5">
-      <button id="checkBtn" class="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed">Check Answer</button>
-      <button id="resetQBtn" class="hidden px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold">Try Again</button>
-      <button id="nextAfterCheckBtn" class="hidden px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 text-sm font-semibold ml-auto">Next Question →</button>
+    <div class="flex flex-wrap items-center gap-2 mt-5">
+      <button id="checkBtn" class="w-full sm:w-auto px-4 py-3 sm:py-2 rounded-lg bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed">Check Answer</button>
+      <button id="resetQBtn" class="hidden flex-1 sm:flex-initial px-4 py-3 sm:py-2 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 active:bg-slate-100 dark:active:bg-slate-700 text-sm font-semibold">Try Again</button>
+      <button id="nextAfterCheckBtn" class="hidden flex-1 sm:flex-initial px-4 py-3 sm:py-2 rounded-lg bg-slate-800 hover:bg-slate-900 active:bg-slate-950 dark:bg-slate-100 dark:hover:bg-white text-white dark:text-slate-900 text-sm font-semibold sm:ml-auto">Next Question →</button>
     </div>
 
     <div id="resultBanner" class="hidden mt-5 rounded-xl p-4 border">
@@ -45250,9 +45270,14 @@
     optionsList.innerHTML = '';
     q.options.forEach(function (opt) {
       var isSelected = ans.selected.indexOf(opt.letter) !== -1;
-      var row = document.createElement('label');
-      var base = 'flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-colors select-none';
-      var stateClasses = 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50';
+      // A plain <div> here, NOT a <label> -- a <label> wrapping the checkbox makes the browser
+      // forward every tap inside it (including taps on a nested .svc-hl service-name span) into a
+      // native checkbox toggle, racing with the tooltip's own tap handling in inconsistent,
+      // mobile-browser-specific ways. Toggling is instead handled explicitly below, and the
+      // .svc-hl click handler (registered separately on optionsList) owns taps on service names.
+      var row = document.createElement('div');
+      var base = 'flex items-start gap-3 p-3.5 rounded-xl border transition-colors select-none';
+      var stateClasses = 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 active:bg-slate-100 dark:active:bg-slate-800';
 
       if (ans.checked) {
         row.classList.add('cursor-default');
@@ -45270,15 +45295,27 @@
 
       var checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.className = 'mt-0.5 h-4 w-4 rounded border-slate-300 dark:border-slate-600 text-orange-500 focus:ring-orange-500 shrink-0';
+      checkbox.className = 'mt-0.5 h-5 w-5 rounded border-slate-300 dark:border-slate-600 text-orange-500 focus:ring-orange-500 shrink-0';
       checkbox.checked = isSelected;
       checkbox.disabled = ans.checked;
-      checkbox.addEventListener('change', function () {
+      function toggleSelection() {
         var i = ans.selected.indexOf(opt.letter);
         if (checkbox.checked && i === -1) ans.selected.push(opt.letter);
         if (!checkbox.checked && i !== -1) ans.selected.splice(i, 1);
         saveState();
         updateCheckBtnState();
+      }
+      checkbox.addEventListener('change', toggleSelection);
+
+      // Tapping anywhere else in the row (but not a service-name span, which owns its own tap
+      // for the tooltip) toggles the checkbox too -- this is what gives the row its large,
+      // easy-to-tap hit area on mobile instead of relying on the tiny checkbox square alone.
+      row.addEventListener('click', function (e) {
+        if (checkbox.disabled) return;
+        if (e.target === checkbox) return; // native toggle + change event already fired
+        if (e.target.closest('.svc-hl')) return; // let the tooltip handler own this tap
+        checkbox.checked = !checkbox.checked;
+        toggleSelection();
       });
 
       var letterBadge = document.createElement('span');
@@ -45286,7 +45323,7 @@
       letterBadge.textContent = opt.letter;
 
       var textSpan = document.createElement('span');
-      textSpan.className = 'text-sm leading-relaxed flex-1';
+      textSpan.className = 'text-sm leading-relaxed flex-1 py-0.5';
       textSpan.innerHTML = highlightOptionText(optText(opt), q.services);
 
       row.appendChild(checkbox);
@@ -45404,9 +45441,17 @@
         if (isFullyCorrect(q, a)) correctCount++;
       }
     });
+    // Note: scoreBadge also carries a responsive "hidden md:flex" pair (hidden on mobile, shown
+    // from md+ up). Toggling the "hidden" class here would strip that pairing once a score
+    // exists and make it show on mobile too -- an inline style avoids fighting the Tailwind
+    // classes, since it wins outright when set and falls back to them cleanly when cleared.
     var badge = document.getElementById('scoreBadge');
     document.getElementById('scoreText').textContent = t().scoreText(correctCount, checkedCount);
-    badge.classList.toggle('hidden', checkedCount === 0);
+    badge.style.display = checkedCount === 0 ? 'none' : '';
+
+    var badgeMobile = document.getElementById('scoreBadgeMobile');
+    document.getElementById('scoreTextMobile').textContent = t().scoreText(correctCount, checkedCount);
+    badgeMobile.classList.toggle('hidden', checkedCount === 0);
   }
 
   document.getElementById('resetProgressBtn').addEventListener('click', function () {
