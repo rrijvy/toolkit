@@ -33,7 +33,10 @@
     text-decoration-style: dotted;
     text-decoration-color: rgb(14 165 233 / .7);
     text-underline-offset: 3px;
-    cursor: help;
+    /* cursor:pointer (not "help") -- mobile browsers use the cursor style as one of the signals
+       for whether an element is "clickable"; a non-pointer cursor is part of what makes some
+       touch browsers wait for a second tap instead of registering the first as a real click. */
+    cursor: pointer;
     border-radius: 3px;
     /* small negative-margin padding trick: bigger tap target without disturbing text flow */
     padding: 2px 1px;
@@ -45208,20 +45211,31 @@
     });
   }
 
+  // Devices whose PRIMARY input has no real hover (phones/tablets) get click/tap as the one and
+  // only trigger. Mixing hover-triggering listeners with a click handler on the same element is
+  // what causes the classic mobile Safari "first tap simulates hover, second tap actually
+  // clicks" bug -- so on these devices the mouseover/focus listeners below are disabled entirely
+  // rather than just left to race with the click handler.
+  var isTouchPrimary = window.matchMedia && window.matchMedia('(hover: none)').matches;
+
   var optionsList = document.getElementById('optionsList');
   optionsList.addEventListener('mouseover', function (e) {
+    if (isTouchPrimary) return;
     var t = e.target.closest('.svc-hl');
     if (t) showTooltipFor(t);
   });
   optionsList.addEventListener('mouseout', function (e) {
+    if (isTouchPrimary) return;
     var t = e.target.closest('.svc-hl');
     if (t && !pinnedEl) hideTooltip();
   });
   optionsList.addEventListener('focusin', function (e) {
+    if (isTouchPrimary) return;
     var t = e.target.closest('.svc-hl');
     if (t) showTooltipFor(t);
   });
   optionsList.addEventListener('focusout', function (e) {
+    if (isTouchPrimary) return;
     var t = e.target.closest('.svc-hl');
     if (t && !pinnedEl) hideTooltip();
   });
